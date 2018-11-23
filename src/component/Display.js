@@ -2,10 +2,10 @@ import React from "react";
 
 import "./Display.css";
 
-const Display = ({ total }) => {
+const Display = ({ displayValue }) => {
   return (
     <div className="component-display">
-      <div>{total}</div>
+      <div>{displayValue}</div>
     </div>
   );
 };

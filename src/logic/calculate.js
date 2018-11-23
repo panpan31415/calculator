@@ -1,6 +1,6 @@
 import Big from "big.js";
 
-import operate from "./operate";
+import calcOperate from "./calcOperate";
 import isNumber from "./isNumber";
 
 /**
@@ -49,7 +49,11 @@ export default function calculate(obj, buttonName) {
 
   if (buttonName === "%") {
     if (obj.operation && obj.next) {
-      const displayValue = operate(obj.displayValue, obj.next, obj.operation);
+      const displayValue = calcOperate(
+        obj.displayValue,
+        obj.next,
+        obj.operation,
+      );
       return {
         displayValue: Big(displayValue)
           .div(Big("100"))
@@ -113,7 +117,7 @@ export default function calculate(obj, buttonName) {
   // User pressed an operation button and there is an existing operation
   if (obj.operation) {
     return {
-      displayValue: operate(obj.displayValue, obj.next, obj.operation),
+      displayValue: calcOperate(obj.displayValue, obj.next, obj.operation),
       next: null,
       operation: buttonName,
     };

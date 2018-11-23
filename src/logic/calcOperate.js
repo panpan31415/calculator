@@ -1,6 +1,6 @@
 import Big from "big.js";
 
-export default function operate(numberOne, numberTwo, operation) {
+export default function calcOperate(numberOne, numberTwo, operation) {
   const one = Big(numberOne || "0");
   const two = Big(numberTwo || "0");
   if (operation === "+") {
@@ -14,6 +14,9 @@ export default function operate(numberOne, numberTwo, operation) {
   }
   if (operation === "÷") {
     return one.div(two).toString();
+  }
+  if (operation === "√") {
+    return one.sqrt(two).toString();
   }
   throw Error(`Unknown operation '${operation}'`);
 }

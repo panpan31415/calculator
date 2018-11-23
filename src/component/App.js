@@ -1,5 +1,5 @@
 import React from "react";
-import calculate from "../logic/calculate";
+import takeInput from "../logic/takeInput";
 import "./App.css";
 import Header from "./Header";
 import Main from "./Main";
@@ -9,10 +9,11 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      displayingValue: 0,
-      first: 0,
-      second: 0,
+      displayValue: "0",
+      first: "0",
+      second: "0",
       operation: null,
+      maxDigits: 14,
       history: {
         values: [],
         currentIndex: 0,
@@ -21,12 +22,22 @@ class App extends React.Component {
         display: true,
         maxmize: true,
         settings: false,
+        percentage: false,
       },
     };
   }
 
   handleClick = buttonName => {
-    this.setState(calculate(this.state, buttonName));
+    this.setState(takeInput(this.state, buttonName), this.checkMaxDigits);
+  };
+
+  checkMaxDigits = () => {
+    if (this.state.displayValue.length > this.state.maxDigits) {
+      this.setState({
+        ...this.state,
+        displayValue: this.state.displayValue.slice(0, this.state.maxDigits),
+      });
+    }
   };
 
   close = () => {
@@ -67,7 +78,7 @@ class App extends React.Component {
             toggleSettings={this.toggleSettings}
           />
           <Main
-            total={this.state.total}
+            displayValue={this.state.displayValue}
             handleClick={this.handleClick}
             maxmize={this.state.UI.maxmize}
           />

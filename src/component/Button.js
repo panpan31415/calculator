@@ -6,16 +6,18 @@ class Button extends React.Component {
   handleClick = () => {
     this.props.clickHandler(this.props.name);
   };
-  orangeButtons = ["←", "+", "-", "x", "÷", "<", ">", "=", "√"];
+  calcOperator = ["+", "-", "x", "÷", "=", "√"];
+  resultOperator = ["←", "<", ">", "+/-", "%", "AC"];
   render() {
     const className = [
       "component-button",
-      this.orangeButtons.includes(this.props.name) ? "orange" : "",
+      this.calcOperator.includes(this.props.name) ? "calcOperator" : "",
+      this.resultOperator.includes(this.props.name) ? "resultOperator" : "",
     ];
     if (this.props.name === "0") {
       className.push("component-button--0");
-    } else if (this.props.name === "=") {
-      className.push("component-button--equals");
+    } else if (this.props.name === "←") {
+      className.push("component-button--backspace");
     }
 
     return (
