@@ -1,0 +1,23 @@
+.ThemeSelector {
+    font-size: 2rem;
+    width: 60%;
+    margin: 10rem auto;
+}
+
+.theme {
+    margin: 1rem;
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.theme--dayTime {
+    color: white;
+    background-color: black;
+}
+
+.theme--nightTime {
+    color: white;
+    background-color: black;
+}

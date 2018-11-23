@@ -1,14 +1,12 @@
 .component-button-panel {
-  background-color: #858694;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  flex: 1 0 auto;
-}
-
-.component-button-panel > div {
-  width: 100%;
-  margin-bottom: 1px;
-  flex: 1 0 auto;
-  display: flex;
+  background-color: black;
+  grid-row: 2 / -1;
+  grid-column: 1 / -1;
+  padding: 1rem;
+  display: grid;
+  height: 520px;
+  width: 520px;
+  grid-template-columns: repeat(5, 100px);
+  grid-template-rows: repeat(5, 100px);
+  overflow: hidden;
 }

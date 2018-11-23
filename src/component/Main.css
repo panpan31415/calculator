@@ -1,0 +1,10 @@
+.main--front {
+    grid-column: 1 / -1;
+    grid-row: 2 / -1;
+    background-color: #000;
+    display: grid;
+    height: 600px;
+    width: 100%;
+    grid-template-rows: repeat(6, 1fr);
+    grid-template-columns: repeat(5, 1fr);
+}

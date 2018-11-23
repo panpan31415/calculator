@@ -38,16 +38,16 @@ describe("calculate", function() {
 
   test(["6", "+", "6"], {
     next: "6",
-    total: "6",
+    displayValue: "6",
     operation: "+",
   });
 
   test(["6", "+", "6", "="], {
-    total: "12",
+    displayValue: "12",
   });
 
   test(["0", "0", "+", "0", "="], {
-    total: "0",
+    displayValue: "0",
   });
 
   test(["6", "+", "6", "=", "9"], {
@@ -55,24 +55,24 @@ describe("calculate", function() {
   });
 
   test(["3", "+", "6", "=", "+"], {
-    total: "9",
+    displayValue: "9",
     operation: "+",
   });
 
   test(["3", "+", "6", "=", "+", "9"], {
-    total: "9",
+    displayValue: "9",
     operation: "+",
     next: "9",
   });
 
   test(["3", "+", "6", "=", "+", "9", "="], {
-    total: "18",
+    displayValue: "18",
   });
 
   // When '=' is pressed and there is not enough information to complete
   // an operation, the '=' should be disregarded.
   test(["3", "+", "=", "3", "="], {
-    total: "6",
+    displayValue: "6",
   });
 
   test(["+"], {
@@ -85,18 +85,18 @@ describe("calculate", function() {
   });
 
   test(["+", "2", "+"], {
-    total: "2",
+    displayValue: "2",
     operation: "+",
   });
 
   test(["+", "2", "+", "+"], {
-    total: "2",
+    displayValue: "2",
     operation: "+",
   });
 
   test(["+", "2", "+", "5"], {
     next: "5",
-    total: "2",
+    displayValue: "2",
     operation: "+",
   });
 
@@ -111,7 +111,7 @@ describe("calculate", function() {
   });
 
   test(["+", "6", "+", "5", "="], {
-    total: "11",
+    displayValue: "11",
   });
 
   test(["0", ".", "4"], {
@@ -123,13 +123,13 @@ describe("calculate", function() {
   });
 
   test([".", "4", "-", ".", "2"], {
-    total: "0.4",
+    displayValue: "0.4",
     next: "0.2",
     operation: "-",
   });
 
   test([".", "4", "-", ".", "2", "="], {
-    total: "0.2",
+    displayValue: "0.2",
   });
 
   // should clear the operator when AC is pressed
@@ -141,17 +141,17 @@ describe("calculate", function() {
   });
 
   test(["4", "%", "x", "2", "="], {
-    total: "0.08",
+    displayValue: "0.08",
   });
 
   test(["4", "%", "x", "2"], {
-    total: "0.04",
+    displayValue: "0.04",
     operation: "x",
     next: "2",
   });
 
   // the percentage sign should also act as '='
   test(["2", "x", "2", "%"], {
-    total: "0.04",
+    displayValue: "0.04",
   });
 });

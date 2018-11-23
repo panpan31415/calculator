@@ -1,0 +1,47 @@
+.Header {
+    width: 100%;
+    padding: 0 10px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    background-color: #fff;
+    grid-row: 1 / span 1;
+    grid-column: 1 / -1;
+}
+
+.Header__button {
+    width: 25px;
+    height: 25px;
+    margin: 0 .5rem;
+    border-radius: 50%;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    fill: #fff;
+    cursor: pointer;
+    transition: transform .5s;
+}
+
+.Header__button:hover {
+    box-shadow: 0 2px 3px #444;
+    transform: translateY(-2px);
+    fill: #222;
+}
+
+.Header__button--close {
+    background-color: orangered;
+}
+
+.Header__button--max {
+    background-color: yellowgreen;
+}
+
+.Header__button--min {
+    background-color: orange;
+}
+
+.Header__button--config {
+    background-color: lightblue;
+}

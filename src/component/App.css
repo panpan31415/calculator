@@ -1,6 +1,32 @@
-.component-app {
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
+.app-container {
+  position: relative;
   height: 100%;
+  width: 100%;
+  perspective: 150rem;
+}
+
+.app--front {
+  position: absolute;
+  border-radius: 10px;
+  overflow: hidden;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  backface-visibility: hidden;
+  transition: transform 1s ease;
+}
+
+.app--back {
+  position: absolute;
+  background-color: transparent;
+  border-radius: 10px;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
+  backface-visibility: hidden;
+  transform: rotateY(-180deg);
+  transition: transform 1s ease;
 }
