@@ -1,4 +1,4 @@
-import calculate from "./calculate";
+import calculate from "./calculate__old";
 import chai from "chai";
 
 // https://github.com/chaijs/chai/issues/469

@@ -1,5 +1,10 @@
 import isNumber from "./isNumber";
-
+import { calcOperator, valueOperator } from "./../component/ButtonPanel";
+import valueOpearte from "./valueOperate";
+import setCaculatorOperator from "./setCaculatorOperator";
+import getResult from "./getResult";
+import checkMaxDigits from "./checkMaxDigits";
+import setNumber from "./setNumber";
 /**
  * Given a  calculator data object and button name , return an updated
  * calculator data object.
@@ -10,27 +15,55 @@ import isNumber from "./isNumber";
  *   second: String       the number after opeartion sign
  *   operation:String  +, -, etc.
  */
+
 const takeInput = (obj, buttonName) => {
+  if (calcOperator.includes(buttonName)) {
+    return setCaculatorOperator(obj, buttonName);
+  }
+
   if (isNumber(buttonName)) {
+    let source = "";
+    let value = "";
+    if (!obj.operation.type) {
+      value = setNumber(obj.first, buttonName);
+      source = "first";
+    } else {
+      value = setNumber(obj.second, buttonName);
+      source = "second";
+    }
+
     return {
       ...obj,
-      displayValue:
-        obj.displayValue.trim() === "0"
-          ? buttonName
-          : obj.displayValue.trim() + buttonName,
+      displayValue: {
+        value: checkMaxDigits(value, obj.maxDigits),
+        source: source,
+      },
+      [source]: value,
+      operation: {
+        ...obj.operation,
+        activated: false,
+      },
     };
   }
-  if (buttonName === "AC") {
+  if (isNumber(buttonName) && obj.displayValue.source === "result") {
+    let value = setNumber("", buttonName);
+
     return {
       ...obj,
-      displayValue: "0",
+      displayValue: {
+        value: checkMaxDigits(value, obj.maxDigits),
+        source: "first",
+      },
+      first: value,
     };
   }
-  if (buttonName === "." && !obj.displayValue.includes(".")) {
-    return {
-      ...obj,
-      displayValue: obj.displayValue + ".",
-    };
+
+  if (valueOperator.includes(buttonName)) {
+    return valueOpearte(obj, buttonName);
+  }
+
+  if (buttonName === "=") {
+    return getResult(obj);
   }
 };
 

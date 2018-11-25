@@ -4,19 +4,26 @@ import "./App.css";
 import Header from "./Header";
 import Main from "./Main";
 import ThemeSelector from "./ThemeSelector";
-
+import historyAssistant from "../logic/historyAssistant";
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      displayValue: "0",
-      first: "0",
-      second: "0",
-      operation: null,
-      maxDigits: 14,
+      displayValue: {
+        value: "0",
+        source: "result",
+      },
+      first: "",
+      second: "",
+      result: "0",
+      operation: {
+        type: null,
+        activated: false,
+      },
+      maxDigits: 10,
       history: {
-        values: [],
-        currentIndex: 0,
+        calculations: [],
+        currentIndex: -1,
       },
       UI: {
         display: true,
@@ -28,16 +35,7 @@ class App extends React.Component {
   }
 
   handleClick = buttonName => {
-    this.setState(takeInput(this.state, buttonName), this.checkMaxDigits);
-  };
-
-  checkMaxDigits = () => {
-    if (this.state.displayValue.length > this.state.maxDigits) {
-      this.setState({
-        ...this.state,
-        displayValue: this.state.displayValue.slice(0, this.state.maxDigits),
-      });
-    }
+    this.setState(takeInput(this.state, buttonName));
   };
 
   close = () => {
@@ -58,6 +56,9 @@ class App extends React.Component {
     });
   };
 
+  componentDidMount() {
+    this.setState({ ...this.state });
+  }
   render() {
     return (
       <div
@@ -81,6 +82,9 @@ class App extends React.Component {
             displayValue={this.state.displayValue}
             handleClick={this.handleClick}
             maxmize={this.state.UI.maxmize}
+            operation={this.state.operation}
+            hasNext={historyAssistant(this.state.history).hasNext}
+            hasPrevious={historyAssistant(this.state.history).hasPrevious}
           />
         </div>
         <div
