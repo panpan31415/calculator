@@ -18,9 +18,6 @@ const getResult = obj => {
   if (!second && lastClaulation) {
     second = lastClaulation.second;
   }
-  //   if (!second && !lastClaulation) {
-  //     second = first;
-  //   }
 
   if (!opeartionType && lastClaulation) {
     opeartionType = lastClaulation.opeartionType;
@@ -48,9 +45,9 @@ const getResult = obj => {
         value: checkMaxDigits(result, obj.maxDigits),
         source: "result",
       },
-      first: result,
+      first: "",
       second: "",
-      result: "",
+      result: result,
       operation: {
         type: null,
         activated: false,
@@ -66,20 +63,6 @@ const getResult = obj => {
 };
 
 export default getResult;
-
-// const verifyInput = ({ first, second, type }) => {
-//   if (
-//     (type === "÷" &&
-//       Big(second)
-//         .abs()
-//         .gt(0)) ||
-//     (type === "√" && Big(first).gte(0))
-//   ) {
-//     return true;
-//   } else {
-//     return false;
-//   }
-// };
 
 const returnError = obj => {
   return {

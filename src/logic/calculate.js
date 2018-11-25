@@ -1,23 +1,29 @@
 import Big from "big.js";
-
+import { calcOperator } from "../component/ButtonPanel";
 export default function calculate(numberOne, numberTwo, operation) {
   const one = Big(numberOne || "0");
   const two = Big(numberTwo || "0");
-  console.log(one.toString(), two.toString(), operation);
+  let result = "";
+
   if (operation === "+") {
-    return one.plus(two).toString();
+    result = one.plus(two).toString();
   }
   if (operation === "-") {
-    return one.minus(two).toString();
+    result = one.minus(two).toString();
   }
   if (operation === "x") {
-    return one.times(two).toString();
+    result = one.times(two).toString();
   }
   if (operation === "÷") {
-    return one.div(two).toString();
+    result = two.abs().gt("0") ? one.div(two).toString() : "Error";
   }
   if (operation === "√") {
-    return one.sqrt().toString();
+    result = one.gte("0") ? one.sqrt().toString() : "Error";
   }
-  throw Error(`Unknown operation '${operation}'`);
+
+  if (!calcOperator.includes(operation)) {
+    throw Error(`Unknown operation '${operation}'`);
+  }
+  console.log(one.toString(), two.toString(), operation);
+  return result;
 }

@@ -11,7 +11,7 @@ class App extends React.Component {
     this.state = {
       displayValue: {
         value: "0",
-        source: "result",
+        source: null,
       },
       first: "",
       second: "",

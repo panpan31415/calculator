@@ -1,52 +1,100 @@
 import calculate from "./calculate";
 import checkMaxDigits from "./checkMaxDigits";
+import historyAssistant from "./historyAssistant";
 const setCaculatorOperator = (obj, buttonName) => {
-  if (obj.operation.type && obj.second) {
-    let result = calculate(obj.first, obj.second, obj.operation.type);
-    let calculation = {
-      first: obj.first,
-      second: obj.second,
-      opeartionType: obj.operation.type,
-      result: result,
+  try {
+    console.log("first", obj.first, "second", "second");
+
+    let first = historyAssistant(obj.history).getLastClaulation()
+      ? historyAssistant(obj.history).getLastClaulation().result
+      : 0;
+    first = obj.first ? obj.first : first;
+
+    let second = historyAssistant(obj.history).getLastClaulation()
+      ? historyAssistant(obj.history).getLastClaulation().second
+      : 0;
+    second = obj.second ? obj.second : second;
+
+    console.log("first", first, "second", second);
+    if (buttonName === "√") {
+      let result = calculate(first, "", "√");
+      let calculation = {
+        first: first,
+        second: "",
+        opeartionType: "√",
+        result: result,
+      };
+      return {
+        ...obj,
+        displayValue: {
+          value: checkMaxDigits(result, obj.maxDigits),
+          source: "result",
+        },
+        result: result,
+        first: "",
+        second: "",
+        history: {
+          currentIndex: obj.history.calculations.length,
+          calculations: [...obj.history.calculations, calculation],
+        },
+        operation: {
+          type: buttonName,
+          activated: false,
+        },
+      };
+    }
+    if (obj.operation.type && obj.second) {
+      let result = calculate(first, second, obj.operation.type);
+      let calculation = {
+        first: first,
+        second: second,
+        opeartionType: obj.operation.type,
+        result: result,
+      };
+      return {
+        ...obj,
+        displayValue: {
+          value: checkMaxDigits(result, obj.maxDigits),
+          source: "first",
+        },
+        result: result,
+        first: result,
+        second: "",
+        history: {
+          currentIndex: obj.history.calculations.length,
+          calculations: [...obj.history.calculations, calculation],
+        },
+        operation: {
+          type: buttonName,
+          activated: true,
+        },
+      };
+    }
+
+    return {
+      ...obj,
+      first: first,
+      operation: {
+        type: buttonName,
+        activated: true,
+      },
     };
+  } catch (err) {
     return {
       ...obj,
       displayValue: {
-        value: checkMaxDigits(result),
-        source: "result",
+        value: "0",
+        source: null,
       },
-      result: result,
-      first: result,
+      first: "",
       second: "",
-      history: {
-        currentIndex: obj.history.calculations.length,
-        calculations: [...obj.history.calculations, calculation],
-      },
+      result: "0",
       operation: {
-        type: buttonName,
-        activated: true,
+        type: null,
+        activated: false,
       },
     };
   }
-
-  if (!obj.first) {
-    return {
-      ...obj,
-      first: obj.result,
-      operation: {
-        type: buttonName,
-        activated: true,
-      },
-    };
-  }
-
-  return {
-    ...obj,
-    operation: {
-      type: buttonName,
-      activated: true,
-    },
-  };
 };
 
 export default setCaculatorOperator;

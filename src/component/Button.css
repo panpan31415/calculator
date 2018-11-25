@@ -52,6 +52,17 @@ button:hover {
   color: #eee;
 }
 
+.squareRootOperator button {
+  background-color: #f5923e;
+  color: #eee;
+}
+
+.squareRootOperator:active button {
+  background-color: #eee !important;
+  color: orangered !important;
+  transform: translateY(-3px) !important;
+}
+
 .calcOperator--active button {
   background-color: #eee;
   color: orangered;

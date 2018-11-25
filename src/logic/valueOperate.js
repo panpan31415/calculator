@@ -1,12 +1,13 @@
 import Big from "big.js";
 import checkMaxDigits from "./checkMaxDigits";
+import isNumber from "./isNumber";
 const valueOpearte = (obj, buttonName) => {
   if (buttonName === "AC") {
     return {
       ...obj,
       displayValue: {
         value: "0",
-        source: "result",
+        source: null,
       },
       first: "",
       second: "",
@@ -22,10 +23,14 @@ const valueOpearte = (obj, buttonName) => {
     };
   }
 
-  let value = obj.displayValue.value;
+  let source = obj.displayValue.source;
+  let value = obj[source];
+  value = isNumber(value) ? value : "0";
 
   switch (buttonName) {
     case "←": {
+      value = checkMaxDigits(value, obj.maxDigits);
+
       if (value.length > 1) {
         value = value.slice(0, value.length - 1);
       } else {
@@ -53,7 +58,17 @@ const valueOpearte = (obj, buttonName) => {
       break;
     }
   }
-
+  if (source === "result") {
+    return {
+      ...obj,
+      displayValue: {
+        ...obj.displayValue,
+        value: checkMaxDigits(value, obj.maxDigits),
+      },
+      [obj.displayValue.source]: value,
+      first: value,
+    };
+  }
   return {
     ...obj,
     displayValue: {

@@ -5,6 +5,7 @@ import setCaculatorOperator from "./setCaculatorOperator";
 import getResult from "./getResult";
 import checkMaxDigits from "./checkMaxDigits";
 import setNumber from "./setNumber";
+import historyAssistant from "./historyAssistant";
 /**
  * Given a  calculator data object and button name , return an updated
  * calculator data object.
@@ -24,7 +25,15 @@ const takeInput = (obj, buttonName) => {
   if (isNumber(buttonName)) {
     let source = "";
     let value = "";
-    if (!obj.operation.type) {
+    let opeartionType = historyAssistant(obj.history).getLastClaulation()
+      ? historyAssistant(obj.history).getLastClaulation().opeartionType
+      : "";
+    opeartionType = obj.operation.type ? obj.operation.type : "";
+
+    if (obj.displayValue.source === "result") {
+      value = setNumber("", buttonName);
+      source = "first";
+    } else if (!opeartionType) {
       value = setNumber(obj.first, buttonName);
       source = "first";
     } else {
