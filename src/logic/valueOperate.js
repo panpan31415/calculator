@@ -58,24 +58,14 @@ const valueOpearte = (obj, buttonName) => {
       break;
     }
   }
-  if (source === "result") {
-    return {
-      ...obj,
-      displayValue: {
-        ...obj.displayValue,
-        value: checkMaxDigits(value, obj.maxDigits),
-      },
-      [obj.displayValue.source]: value,
-      first: value,
-    };
-  }
+
   return {
     ...obj,
     displayValue: {
       ...obj.displayValue,
       value: checkMaxDigits(value, obj.maxDigits),
     },
-    [obj.displayValue.source]: value,
+    [obj.displayValue.source]: checkMaxDigits(value, obj.maxDigits),
   };
 };
 export default valueOpearte;

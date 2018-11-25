@@ -73,6 +73,10 @@ const setCaculatorOperator = (obj, buttonName) => {
 
     return {
       ...obj,
+      displayValue: {
+        value: checkMaxDigits(first, obj.maxDigits),
+        source: "first",
+      },
       first: first,
       operation: {
         type: buttonName,

@@ -92,13 +92,13 @@ button:hover {
 }
 
 .history button {
-  color: #222;
+  color: orangered;
   background: #bbb;
 }
 
 .history:active button {
   color: orangered;
-  background: #ddd;
+  background: #eee;
 }
 
 .history--disabled button {

@@ -83,8 +83,8 @@ class App extends React.Component {
             handleClick={this.handleClick}
             maxmize={this.state.UI.maxmize}
             operation={this.state.operation}
-            hasNext={historyAssistant(this.state.history).hasNext}
-            hasPrevious={historyAssistant(this.state.history).hasPrevious}
+            hasNext={historyAssistant(this.state.history).hasNext()}
+            hasPrevious={historyAssistant(this.state.history).hasPrevious()}
           />
         </div>
         <div
