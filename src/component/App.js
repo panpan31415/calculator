@@ -32,6 +32,8 @@ class App extends React.Component {
         percentage: false,
       },
     };
+    this.getNextHistory = this.getNextHistory.bind(this);
+    this.getPreviousHistory = this.getPreviousHistory.bind(this);
   }
 
   handleClick = buttonName => {
@@ -55,10 +57,44 @@ class App extends React.Component {
       UI: { ...this.state.UI, settings: !this.state.UI.settings },
     });
   };
+  hasNext = () => {
+    return historyAssistant(this.state.history).hasNext();
+  };
+  hasPrevious = () => {
+    return historyAssistant(this.state.history).hasPrevious();
+  };
+  getPreviousHistory = () => {
+    const hasPrevious = historyAssistant(this.state.history);
+    const calculations = this.state.history.calculations;
+    if (hasPrevious) {
+      const value = calculations[calculations.currentIndex - 1].result;
+      this.setState({
+        ...this.state,
+        displayValue: {
+          value: value,
+          source: "first",
+        },
+        first: value,
+      });
+    }
+  };
 
-  componentDidMount() {
-    this.setState({ ...this.state });
-  }
+  getNextHistory = () => {
+    const hasNext = historyAssistant(this.state.history);
+    const calculations = this.state.history.calculations;
+    if (hasNext) {
+      const value = calculations[calculations.currentIndex + 1].result;
+      this.setState({
+        ...this.state,
+        displayValue: {
+          value: value,
+          source: "first",
+        },
+        first: value,
+      });
+    }
+  };
+
   render() {
     return (
       <div
@@ -83,8 +119,10 @@ class App extends React.Component {
             handleClick={this.handleClick}
             maxmize={this.state.UI.maxmize}
             operation={this.state.operation}
-            hasNext={historyAssistant(this.state.history).hasNext()}
-            hasPrevious={historyAssistant(this.state.history).hasPrevious()}
+            hasNext={this.hasNext}
+            hasPrevious={this.hasPrevious}
+            getNextHistory={this.getNextHistory}
+            getPreviousHistory={this.getPreviousHistory}
           />
         </div>
         <div

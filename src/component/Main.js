@@ -9,6 +9,8 @@ const Main = ({
   operation,
   hasNext,
   hasPrevious,
+  getNextHistory,
+  getPreviousHistory,
 }) => {
   return (
     <main
@@ -21,6 +23,8 @@ const Main = ({
         operation={operation}
         hasNext={hasNext}
         hasPrevious={hasPrevious}
+        getNextHistory={getNextHistory}
+        getPreviousHistory={getPreviousHistory}
       />
     </main>
   );

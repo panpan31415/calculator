@@ -57,6 +57,7 @@ class ButtonPanel extends React.Component {
             key={name}
             operation={this.props.operation}
             hasPrevious={this.props.hasPrevious}
+            getPreviousHistory={this.props.getPreviousHistory}
           />
         );
       }
@@ -68,6 +69,7 @@ class ButtonPanel extends React.Component {
             key={name}
             operation={this.props.operation}
             hasNext={this.props.hasNext}
+            getNextHistory={this.props.getPreviousHistory}
           />
         );
       }

@@ -6,20 +6,19 @@
 // };
 
 const historyAssistant = history => {
-  const _history = history;
-  const length = _history.calculations.length;
+  const length = history.calculations.length;
+  const currentIndex = history.currentIndex;
   const getLastClaulation = () => {
-    return _history.calculations[length - 1];
+    return history.calculations[length - 1];
   };
 
-  const hasNext = currentIndex => {
+  const hasNext = () => {
     return currentIndex < length - 1;
   };
 
-  const hasPrevious = currentIndex => {
+  const hasPrevious = () => {
     return currentIndex > 0;
   };
-
   return {
     getLastClaulation: getLastClaulation,
     hasNext: hasNext,

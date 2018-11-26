@@ -10,7 +10,7 @@ class Button extends React.Component {
   };
   setButtonStyle = () => {
     const activatedOpeartion =
-      this.props.operation.type &&
+      // this.props.operation.type &&
       this.props.operation.type === this.props.name &&
       this.props.operation.activated;
 
@@ -28,10 +28,10 @@ class Button extends React.Component {
     } else if (this.props.name === "=") {
       className.push("component-button--equal");
     } else if (this.props.name === ">") {
-      const disabled = !this.props.hasNext ? "" : "history--disabled";
+      const disabled = this.props.hasNext() ? "" : "history--disabled";
       className.push("history " + disabled);
     } else if (this.props.name === "<") {
-      const disabled = !this.props.hasPrevious ? "" : "history--disabled";
+      const disabled = this.props.hasPrevious() ? "" : "history--disabled";
       className.push("history " + disabled);
     } else if (this.props.name === "√") {
       className.push("squareRootOperator ");
@@ -39,6 +39,8 @@ class Button extends React.Component {
 
     return className;
   };
+
+  setEventHandller = () => {};
 
   render() {
     const className = this.setButtonStyle();
