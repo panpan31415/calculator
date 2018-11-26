@@ -24,6 +24,5 @@ export default function calculate(numberOne, numberTwo, operation) {
   if (!calcOperator.includes(operation)) {
     throw Error(`Unknown operation '${operation}'`);
   }
-  console.log(one.toString(), two.toString(), operation);
   return result;
 }

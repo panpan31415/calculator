@@ -3,8 +3,6 @@ import checkMaxDigits from "./checkMaxDigits";
 import historyAssistant from "./historyAssistant";
 const setCaculatorOperator = (obj, buttonName) => {
   try {
-    console.log("first", obj.first, "second", "second");
-
     let first = historyAssistant(obj.history).getLastClaulation()
       ? historyAssistant(obj.history).getLastClaulation().result
       : 0;
@@ -15,7 +13,6 @@ const setCaculatorOperator = (obj, buttonName) => {
       : 0;
     second = obj.second ? obj.second : second;
 
-    console.log("first", first, "second", second);
     if (buttonName === "√") {
       let result = calculate(first, "", "√");
       let calculation = {

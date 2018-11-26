@@ -66,15 +66,21 @@ class App extends React.Component {
   getPreviousHistory = () => {
     const hasPrevious = historyAssistant(this.state.history);
     const calculations = this.state.history.calculations;
+    const currentIndex = this.state.history.currentIndex;
+    console.log("70 app");
     if (hasPrevious) {
-      const value = calculations[calculations.currentIndex - 1].result;
+      const value = calculations[currentIndex - 1].result;
       this.setState({
         ...this.state,
         displayValue: {
+          ...this.state.displayValue,
           value: value,
-          source: "first",
         },
-        first: value,
+        [this.state.displayValue.source]: value,
+        history: {
+          ...this.state.history,
+          currentIndex: currentIndex - 1,
+        },
       });
     }
   };
@@ -121,8 +127,6 @@ class App extends React.Component {
             operation={this.state.operation}
             hasNext={this.hasNext}
             hasPrevious={this.hasPrevious}
-            getNextHistory={this.getNextHistory}
-            getPreviousHistory={this.getPreviousHistory}
           />
         </div>
         <div

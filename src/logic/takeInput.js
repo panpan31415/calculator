@@ -6,6 +6,7 @@ import getResult from "./getResult";
 import checkMaxDigits from "./checkMaxDigits";
 import setNumber from "./setNumber";
 import historyAssistant from "./historyAssistant";
+import getHistory from "./getHistory";
 /**
  * Given a  calculator data object and button name , return an updated
  * calculator data object.
@@ -73,6 +74,10 @@ const takeInput = (obj, buttonName) => {
 
   if (buttonName === "=") {
     return getResult(obj);
+  }
+
+  if (buttonName === "<" || buttonName === ">") {
+    return getHistory(obj, buttonName);
   }
 };
 

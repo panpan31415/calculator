@@ -40,8 +40,6 @@ class Button extends React.Component {
     return className;
   };
 
-  setEventHandller = () => {};
-
   render() {
     const className = this.setButtonStyle();
     return (
