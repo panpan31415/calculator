@@ -1,4 +1,5 @@
 import historyAssistant from "./historyAssistant";
+import checkMaxDigits from "./checkMaxDigits";
 const getHistory = (obj, buttonName) => {
   const { history } = obj;
   const hasPrevious = historyAssistant(history).hasPrevious();
@@ -17,7 +18,7 @@ const getHistory = (obj, buttonName) => {
     ...obj,
     displayValue: {
       ...obj.displayValue,
-      value: result,
+      value: checkMaxDigits(result),
     },
     [obj.displayValue.source]: result,
     history: {

@@ -32,8 +32,6 @@ class App extends React.Component {
         percentage: false,
       },
     };
-    this.getNextHistory = this.getNextHistory.bind(this);
-    this.getPreviousHistory = this.getPreviousHistory.bind(this);
   }
 
   handleClick = buttonName => {
@@ -62,43 +60,6 @@ class App extends React.Component {
   };
   hasPrevious = () => {
     return historyAssistant(this.state.history).hasPrevious();
-  };
-  getPreviousHistory = () => {
-    const hasPrevious = historyAssistant(this.state.history);
-    const calculations = this.state.history.calculations;
-    const currentIndex = this.state.history.currentIndex;
-    console.log("70 app");
-    if (hasPrevious) {
-      const value = calculations[currentIndex - 1].result;
-      this.setState({
-        ...this.state,
-        displayValue: {
-          ...this.state.displayValue,
-          value: value,
-        },
-        [this.state.displayValue.source]: value,
-        history: {
-          ...this.state.history,
-          currentIndex: currentIndex - 1,
-        },
-      });
-    }
-  };
-
-  getNextHistory = () => {
-    const hasNext = historyAssistant(this.state.history);
-    const calculations = this.state.history.calculations;
-    if (hasNext) {
-      const value = calculations[calculations.currentIndex + 1].result;
-      this.setState({
-        ...this.state,
-        displayValue: {
-          value: value,
-          source: "first",
-        },
-        first: value,
-      });
-    }
   };
 
   render() {

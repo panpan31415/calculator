@@ -1,6 +1,10 @@
 import Big from "big.js";
 import { calcOperator } from "../component/ButtonPanel";
+import isNumber from "./isNumber";
 export default function calculate(numberOne, numberTwo, operation) {
+  if (!isNumber(numberOne) || (!isNumber(numberTwo) && numberTwo)) {
+    return "Error";
+  }
   const one = Big(numberOne || "0");
   const two = Big(numberTwo || "0");
   let result = "";
