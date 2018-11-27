@@ -8,7 +8,7 @@ import historyAssistant from "./historyAssistant";
  * @param  {{first,second,result,operation,displayValue,history,UI,maxDigits}} state object
  * @returns state new satet object
  * @description
- *      By default, use first number , second Number and opeartion stored in state  to calculate a result.
+ * By default, use first number , second Number and opeartion stored in state  to calculate a result.
  * If the first number is not set, first number will be privious calculation result, if privious calculation is empty, set first to "0"
  * If the second number is not set, use the one from previous calculation. if privious calcultion is empty, set second number to the value of first number.
  *
@@ -49,7 +49,7 @@ const getResult = state => {
     opeartionType: opeartionType,
     result: result,
   };
-  console.log("have you run");
+
   return {
     ...state,
     displayValue: {

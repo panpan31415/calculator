@@ -25,13 +25,19 @@ const getHistory = (state, buttonName) => {
   return {
     ...state,
     displayValue: {
-      ...state.displayValue,
+      source: "result",
       value: maxDigitsTrim(result, state.maxDigits),
     },
-    [state.displayValue.source]: result,
+    first: result,
+    second: "",
+    result: result,
     history: {
       ...state.history,
       currentIndex: currentIndex + delta,
+    },
+    operation: {
+      type: null,
+      activated: false,
     },
   };
 };
