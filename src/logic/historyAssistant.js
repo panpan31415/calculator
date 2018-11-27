@@ -1,9 +1,6 @@
-// const history = {
-//   history: {
-//     calculations: [{ first: "", second: "", opeartionType: "", result: "" }],
-//     currentIndex: -1,
-//   },
-// };
+/**
+ * @param {{calculations:[],currentIndex:number}} history
+ */
 
 const historyAssistant = history => {
   const length = history.calculations.length;

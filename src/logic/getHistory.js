@@ -1,7 +1,15 @@
 import historyAssistant from "./historyAssistant";
-import checkMaxDigits from "./checkMaxDigits";
-const getHistory = (obj, buttonName) => {
-  const { history } = obj;
+import maxDigitsTrim from "./maxDigitsTrim";
+
+/**
+ *
+ * @param {{first,second,result,operation,displayValue,history,UI,maxDigits}} state
+ * @param {string} buttonName "<" or ">"
+ * @returns new state
+ */
+
+const getHistory = (state, buttonName) => {
+  const { history } = state;
   const hasPrevious = historyAssistant(history).hasPrevious();
   const hasNext = historyAssistant(history).hasNext();
   const { calculations, currentIndex } = history;
@@ -11,18 +19,18 @@ const getHistory = (obj, buttonName) => {
   } else if (buttonName === "<" && hasPrevious) {
     delta = -1;
   } else {
-    return obj;
+    return state;
   }
   const result = calculations[currentIndex + delta].result;
   return {
-    ...obj,
+    ...state,
     displayValue: {
-      ...obj.displayValue,
-      value: checkMaxDigits(result),
+      ...state.displayValue,
+      value: maxDigitsTrim(result, state.maxDigits),
     },
-    [obj.displayValue.source]: result,
+    [state.displayValue.source]: result,
     history: {
-      ...obj.history,
+      ...state.history,
       currentIndex: currentIndex + delta,
     },
   };

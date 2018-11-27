@@ -3,81 +3,29 @@ import { calcOperator, valueOperator } from "./../component/ButtonPanel";
 import valueOpearte from "./valueOperate";
 import setCaculatorOperator from "./setCaculatorOperator";
 import getResult from "./getResult";
-import checkMaxDigits from "./checkMaxDigits";
-import setNumber from "./setNumber";
-import historyAssistant from "./historyAssistant";
+
 import getHistory from "./getHistory";
+import setNumber from "./setNumber";
+
 /**
- * Given a  calculator data object and button name , return an updated
- * calculator data object.
  *
- * Calculator data object contains:
- *   displayValue:String  the value displying on screen
- *   first:String         the number before opeartion sign
- *   second: String       the number after opeartion sign
- *   operation:String  +, -, etc.
+ * @param {{first,second,result,operation,displayValue,history,UI,maxDigits}} state
+ * @param {string} buttonName
  */
-
-const takeInput = (obj, buttonName) => {
+const takeInput = (state, buttonName) => {
+  //set calcOperator should be first check, - is also considered a number
   if (calcOperator.includes(buttonName)) {
-    return setCaculatorOperator(obj, buttonName);
-  }
-
-  if (isNumber(buttonName)) {
-    let source = "";
-    let value = "";
-    let opeartionType = historyAssistant(obj.history).getLastClaulation()
-      ? historyAssistant(obj.history).getLastClaulation().opeartionType
-      : "";
-    opeartionType = obj.operation.type ? obj.operation.type : "";
-
-    if (obj.displayValue.source === "result") {
-      value = setNumber("", buttonName);
-      source = "first";
-    } else if (!opeartionType) {
-      value = setNumber(obj.first, buttonName);
-      source = "first";
-    } else {
-      value = setNumber(obj.second, buttonName);
-      source = "second";
-    }
-
-    return {
-      ...obj,
-      displayValue: {
-        value: checkMaxDigits(value, obj.maxDigits),
-        source: source,
-      },
-      [source]: value,
-      operation: {
-        ...obj.operation,
-        activated: false,
-      },
-    };
-  }
-  if (isNumber(buttonName) && obj.displayValue.source === "result") {
-    let value = setNumber("", buttonName);
-
-    return {
-      ...obj,
-      displayValue: {
-        value: checkMaxDigits(value, obj.maxDigits),
-        source: "first",
-      },
-      first: value,
-    };
-  }
-
-  if (valueOperator.includes(buttonName)) {
-    return valueOpearte(obj, buttonName);
-  }
-
-  if (buttonName === "=") {
-    return getResult(obj);
-  }
-
-  if (buttonName === "<" || buttonName === ">") {
-    return getHistory(obj, buttonName);
+    return setCaculatorOperator(state, buttonName);
+  } else if (isNumber(buttonName)) {
+    return setNumber(state, buttonName);
+  } else if (valueOperator.includes(buttonName)) {
+    return valueOpearte(state, buttonName);
+  } else if (buttonName === "<" || buttonName === ">") {
+    return getHistory(state, buttonName);
+  } else if (buttonName === "=") {
+    return getResult(state);
+  } else {
+    throw Error("unknown button name: " + buttonName);
   }
 };
 

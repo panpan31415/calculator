@@ -1,10 +1,10 @@
 import Big from "big.js";
-import checkMaxDigits from "./checkMaxDigits";
+import maxDigitsTrim from "./maxDigitsTrim";
 import isNumber from "./isNumber";
-const valueOpearte = (obj, buttonName) => {
+const valueOpearte = (state, buttonName) => {
   if (buttonName === "AC") {
     return {
-      ...obj,
+      ...state,
       displayValue: {
         value: "0",
         source: null,
@@ -23,13 +23,13 @@ const valueOpearte = (obj, buttonName) => {
     };
   }
 
-  let source = obj.displayValue.source;
-  let value = obj[source];
+  let source = state.displayValue.source;
+  let value = state[source];
   value = isNumber(value) ? value : "0";
 
   switch (buttonName) {
     case "←": {
-      value = checkMaxDigits(value, obj.maxDigits);
+      value = maxDigitsTrim(value, state.maxDigits);
 
       if (value.length > 1) {
         value = value.slice(0, value.length - 1);
@@ -60,12 +60,15 @@ const valueOpearte = (obj, buttonName) => {
   }
 
   return {
-    ...obj,
+    ...state,
     displayValue: {
-      ...obj.displayValue,
-      value: checkMaxDigits(value, obj.maxDigits),
+      ...state.displayValue,
+      value: maxDigitsTrim(value, state.maxDigits),
     },
-    [obj.displayValue.source]: checkMaxDigits(value, obj.maxDigits),
+    [state.displayValue.source === "result"
+      ? "first"
+      : state.displayValue.source]: value,
+    [state.displayValue.source]: value,
   };
 };
 export default valueOpearte;

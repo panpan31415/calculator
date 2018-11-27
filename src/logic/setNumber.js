@@ -1,30 +1,36 @@
-import isNumber from "./isNumber";
+import historyAssistant from "./historyAssistant";
+import maxDigitsTrim from "./maxDigitsTrim";
+import combineNumber from "./combineNumber";
+const setNumber = (obj, buttonName) => {
+  let source = "";
+  let value = "";
+  let opeartionType = historyAssistant(obj.history).getLastClaulation()
+    ? historyAssistant(obj.history).getLastClaulation().opeartionType
+    : "";
+  opeartionType = obj.operation.type ? obj.operation.type : "";
 
-/**
- * take a number and buttonName to make a new number
- *
- * @param {string} number
- * @param {string} buttonName
- */
-
-const setNumber = (number, buttonName) => {
-  let _number = number;
-  if (_number) {
-    _number = isNumber(_number) ? _number : "0";
+  if (obj.displayValue.source === "result") {
+    value = combineNumber("", buttonName);
+    source = "first";
+  } else if (!opeartionType) {
+    value = combineNumber(obj.first, buttonName);
+    source = "first";
   } else {
-    _number = "0";
-  }
-  if (buttonName !== "." && _number !== "0") {
-    _number += buttonName;
-  } else if (buttonName !== "." && _number === "0") {
-    _number = buttonName;
-  } else if (buttonName === "." && _number !== "0") {
-    _number.includes(".") ? (_number += "") : (_number += ".");
-  } else {
-    _number += buttonName;
+    value = combineNumber(obj.second, buttonName);
+    source = "second";
   }
 
-  return _number;
+  return {
+    ...obj,
+    displayValue: {
+      value: maxDigitsTrim(value, obj.maxDigits),
+      source: source,
+    },
+    [source]: value,
+    operation: {
+      ...obj.operation,
+      activated: false,
+    },
+  };
 };
-
 export default setNumber;

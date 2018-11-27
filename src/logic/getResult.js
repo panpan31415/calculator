@@ -1,13 +1,24 @@
 import calculate from "./calculate";
-import checkMaxDigits from "./checkMaxDigits";
-// import Big from "big.js";
+import maxDigitsTrim from "./maxDigitsTrim";
+
 import historyAssistant from "./historyAssistant";
 
-const getResult = obj => {
-  let first = obj.first;
-  let second = obj.second;
-  let opeartionType = obj.operation.type;
-  let lastClaulation = historyAssistant(obj.history).getLastClaulation();
+/**
+ *
+ * @param  {{first,second,result,operation,displayValue,history,UI,maxDigits}} state object
+ * @returns state new satet object
+ * @description
+ *      By default, use first number , second Number and opeartion stored in state  to calculate a result.
+ * If the first number is not set, first number will be privious calculation result, if privious calculation is empty, set first to "0"
+ * If the second number is not set, use the one from previous calculation. if privious calcultion is empty, set second number to the value of first number.
+ *
+ */
+const getResult = state => {
+  let first = state.first;
+  let second = state.second;
+  let opeartionType = state.operation.type;
+  let lastClaulation = historyAssistant(state.history).getLastClaulation();
+
   if (!first && lastClaulation) {
     first = lastClaulation.result;
   }
@@ -24,62 +35,39 @@ const getResult = obj => {
   }
 
   if (!opeartionType && !lastClaulation) {
-    return obj;
+    return state;
   }
 
   if (first && opeartionType && !second) {
-    second = obj.first;
+    second = state.first;
   }
 
-  try {
-    let result = calculate(first, second, opeartionType);
-    let calculation = {
-      first: first,
-      second: second,
-      opeartionType: opeartionType,
-      result: result,
-    };
-    return {
-      ...obj,
-      displayValue: {
-        value: checkMaxDigits(result, obj.maxDigits),
-        source: "result",
-      },
-      first: "",
-      second: "",
-      result: result,
-      operation: {
-        type: null,
-        activated: false,
-      },
-      history: {
-        currentIndex: obj.history.calculations.length,
-        calculations: [...obj.history.calculations, calculation],
-      },
-    };
-  } catch (err) {
-    returnError(obj);
-  }
-};
-
-export default getResult;
-
-const returnError = obj => {
+  let result = calculate(first, second, opeartionType);
+  let calculation = {
+    first: first,
+    second: second,
+    opeartionType: opeartionType,
+    result: result,
+  };
+  console.log("have you run");
   return {
-    ...obj,
-    displayValue: "Error",
-    result: "Error",
+    ...state,
+    displayValue: {
+      value: maxDigitsTrim(result, state.maxDigits),
+      source: "result",
+    },
+    first: "",
+    second: "",
+    result: result,
+    operation: {
+      type: null,
+      activated: false,
+    },
     history: {
-      calculations: [
-        ...obj.history.calculations,
-        {
-          first: obj.first,
-          second: obj.second,
-          opeartionType: obj.operation.type,
-          result: "Error",
-        },
-      ],
-      currentIndex: obj.history.calculations.length,
+      currentIndex: state.history.calculations.length,
+      calculations: [...state.history.calculations, calculation],
     },
   };
 };
+
+export default getResult;

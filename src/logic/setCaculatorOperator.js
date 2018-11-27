@@ -1,101 +1,76 @@
 import calculate from "./calculate";
-import checkMaxDigits from "./checkMaxDigits";
+import maxDigitsTrim from "./maxDigitsTrim";
 import historyAssistant from "./historyAssistant";
-const setCaculatorOperator = (obj, buttonName) => {
-  try {
-    let first = historyAssistant(obj.history).getLastClaulation()
-      ? historyAssistant(obj.history).getLastClaulation().result
-      : 0;
-    first = obj.first ? obj.first : first;
+import setSquareRoor from "./setSquareRoot";
 
-    let second = historyAssistant(obj.history).getLastClaulation()
-      ? historyAssistant(obj.history).getLastClaulation().second
-      : 0;
-    second = obj.second ? obj.second : second;
+/**
+ *
+ * @param {{first,second,result,operation,displayValue,history,UI,maxDigits}} state
+ * @param {string} buttonName +,-,* ... including "√"
+ * @description
+ *  before setting calculation, check history, if there are any history , use the lastest calculation's result as first number, otherwise first number is set to "0".
+ *  then check if user have typed any number before setting calculation, if yes update first unmber to user's input.
+ * if second number is not set, set to privious one or 0 if privious one is also not set, if user has input, update it with use's input
+ *
+ */
 
-    if (buttonName === "√") {
-      let result = calculate(first, "", "√");
-      let calculation = {
-        first: first,
-        second: "",
-        opeartionType: "√",
-        result: result,
-      };
-      return {
-        ...obj,
-        displayValue: {
-          value: checkMaxDigits(result, obj.maxDigits),
-          source: "result",
-        },
-        result: result,
-        first: "",
-        second: "",
-        history: {
-          currentIndex: obj.history.calculations.length,
-          calculations: [...obj.history.calculations, calculation],
-        },
-        operation: {
-          type: buttonName,
-          activated: false,
-        },
-      };
-    }
-    if (obj.operation.type && obj.second) {
-      let result = calculate(first, second, obj.operation.type);
-      let calculation = {
-        first: first,
-        second: second,
-        opeartionType: obj.operation.type,
-        result: result,
-      };
-      return {
-        ...obj,
-        displayValue: {
-          value: checkMaxDigits(result, obj.maxDigits),
-          source: "first",
-        },
-        result: result,
-        first: result,
-        second: "",
-        history: {
-          currentIndex: obj.history.calculations.length,
-          calculations: [...obj.history.calculations, calculation],
-        },
-        operation: {
-          type: buttonName,
-          activated: true,
-        },
-      };
-    }
+const setCaculatorOperator = (state, buttonName) => {
+  let first = historyAssistant(state.history).getLastClaulation()
+    ? historyAssistant(state.history).getLastClaulation().result
+    : 0;
+  first = state.first ? state.first : first;
 
+  let second = historyAssistant(state.history).getLastClaulation()
+    ? historyAssistant(state.history).getLastClaulation().second
+    : 0;
+  second = state.second ? state.second : second;
+
+  // "√" should always be checked first, because it doesn't need a second number
+  if (buttonName === "√") {
+    return setSquareRoor(state, first);
+  }
+
+  // if opearation type and second number is already set, give result directly without press "="
+  if (state.operation.type && state.second) {
+    let result = calculate(first, second, state.operation.type);
+    let calculation = {
+      first: first,
+      second: second,
+      opeartionType: state.operation.type,
+      result: result,
+    };
     return {
-      ...obj,
+      ...state,
       displayValue: {
-        value: checkMaxDigits(first, obj.maxDigits),
+        value: maxDigitsTrim(result, state.maxDigits),
         source: "first",
       },
-      first: first,
+      result: result,
+      first: result,
+      second: "",
+      history: {
+        currentIndex: state.history.calculations.length,
+        calculations: [...state.history.calculations, calculation],
+      },
       operation: {
         type: buttonName,
         activated: true,
       },
     };
-  } catch (err) {
-    return {
-      ...obj,
-      displayValue: {
-        value: "0",
-        source: null,
-      },
-      first: "",
-      second: "",
-      result: "0",
-      operation: {
-        type: null,
-        activated: false,
-      },
-    };
   }
+  // by defalut set display value to be the first value and set the operation type to current pressed one and set style to activated
+  return {
+    ...state,
+    displayValue: {
+      value: maxDigitsTrim(first, state.maxDigits),
+      source: "first",
+    },
+    first: first,
+    operation: {
+      type: buttonName,
+      activated: true,
+    },
+  };
 };
 
 export default setCaculatorOperator;

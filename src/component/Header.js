@@ -1,11 +1,3 @@
-/*
-  App headers, contains 4 buttons: 
-    button--close,
-    button--max,
-    button--min,
-    button--config
-*/
-
 import * as React from "react";
 import { IconClose, IconMaxmize, IconMinimize, IconSettings } from "./icons";
 import "./Header.css";
