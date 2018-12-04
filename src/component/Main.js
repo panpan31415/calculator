@@ -11,6 +11,7 @@ const Main = ({
   hasPrevious,
   getNextHistory,
   getPreviousHistory,
+  reset,
 }) => {
   return (
     <main
@@ -25,6 +26,7 @@ const Main = ({
         hasPrevious={hasPrevious}
         getNextHistory={getNextHistory}
         getPreviousHistory={getPreviousHistory}
+        reset={reset}
       />
     </main>
   );

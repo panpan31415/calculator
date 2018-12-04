@@ -5,7 +5,7 @@ import maxDigitsTrim from "./maxDigitsTrim";
  * @param {{first,second,result,operation,displayValue,history,UI,maxDigits}} state
  * @param {string} first specified "first" number to calculate with "√"
  */
-const setSquareRoor = (state, first) => {
+const setSquareRoot = (state, first) => {
   let result = calculate(first, "", "√");
   let calculation = {
     first: first,
@@ -32,4 +32,4 @@ const setSquareRoor = (state, first) => {
     },
   };
 };
-export default setSquareRoor;
+export default setSquareRoot;

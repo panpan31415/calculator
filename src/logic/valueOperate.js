@@ -1,25 +1,12 @@
 import Big from "big.js";
 import maxDigitsTrim from "./maxDigitsTrim";
 import isNumber from "./isNumber";
+import { initialLogicState } from "./initialState";
 const valueOpearte = (state, buttonName) => {
   if (buttonName === "AC") {
     return {
       ...state,
-      displayValue: {
-        value: "0",
-        source: null,
-      },
-      first: "",
-      second: "",
-      result: "0",
-      operation: {
-        type: null,
-        activated: false,
-      },
-      history: {
-        calculations: [],
-        currentIndex: -1,
-      },
+      ...initialLogicState,
     };
   }
 

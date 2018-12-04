@@ -8,7 +8,7 @@ import setSquareRoor from "./setSquareRoot";
  * @param {{first,second,result,operation,displayValue,history,UI,maxDigits}} state
  * @param {string} buttonName +,-,* ... including "√"
  * @description
- *  before setting calculation, check history, if there are any history , use the lastest calculation's result as first number, otherwise first number is set to "0".
+ *  before setting calculation, check history, if there are caculation in history , use the lastest calculation's result as first number, otherwise first number is set to "0".
  *  then check if user have typed any number before setting calculation, if yes update first unmber to user's input.
  * if second number is not set, set to privious one or 0 if privious one is also not set, if user has input, update it with use's input
  *
@@ -30,7 +30,7 @@ const setCaculatorOperator = (state, buttonName) => {
     return setSquareRoor(state, first);
   }
 
-  // if opearation type and second number is already set, give result directly without press "="
+  // if opearation type and second number is already set, give result directly without pressing "="
   if (state.operation.type && state.second) {
     let result = calculate(first, second, state.operation.type);
     let calculation = {
@@ -58,7 +58,7 @@ const setCaculatorOperator = (state, buttonName) => {
       },
     };
   }
-  // by defalut set display value to be the first value and set the operation type to current pressed one and set style to activated
+  // by defalut set display value to be the first value and set the operation type to current pressed one and set style to be activated
   return {
     ...state,
     displayValue: {

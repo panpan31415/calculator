@@ -10,12 +10,7 @@ export const valueOperator = ["←", "+/-", "%", "AC", "C"];
 export const numbers = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "."];
 
 class ButtonPanel extends React.Component {
-  handleClick = buttonName => {
-    this.props.clickHandler(buttonName);
-  };
-
   buttonsNames = [
-    "AC",
     "+/-",
     "%",
     "←",
@@ -39,41 +34,30 @@ class ButtonPanel extends React.Component {
     "√",
     "=",
   ];
+
+  handleClick = buttonName => {
+    this.props.clickHandler(buttonName);
+  };
+
   renderButtons = () => {
-    return this.buttonsNames.map(name => {
-      let button = (
+    return [this.props.reset, ...this.buttonsNames].map(name => {
+      let hasPrevious = null;
+      let hasNext = null;
+      if (name === "<") {
+        hasPrevious = this.props.hasPrevious;
+      } else if (name === ">") {
+        hasNext = this.props.hasNext;
+      }
+      return (
         <Button
           name={name}
           clickHandler={this.handleClick}
           key={name}
           operation={this.props.operation}
+          hasPrevious={hasPrevious}
+          hasNext={hasNext}
         />
       );
-
-      if (name === "<") {
-        button = (
-          <Button
-            name={name}
-            clickHandler={this.handleClick}
-            key={name}
-            operation={this.props.operation}
-            hasPrevious={this.props.hasPrevious}
-          />
-        );
-      }
-      if (name === ">") {
-        button = (
-          <Button
-            name={name}
-            clickHandler={this.handleClick}
-            key={name}
-            operation={this.props.operation}
-            hasNext={this.props.hasNext}
-          />
-        );
-      }
-
-      return button;
     });
   };
   render() {

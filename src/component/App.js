@@ -5,33 +5,13 @@ import Header from "./Header";
 import Main from "./Main";
 import ThemeSelector from "./ThemeSelector";
 import historyAssistant from "../logic/historyAssistant";
+import initialState from "../logic/initialState";
+import setReset from "./setReset";
+
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      displayValue: {
-        value: "0",
-        source: null,
-      },
-      first: "",
-      second: "",
-      result: "0",
-      operation: {
-        type: null,
-        activated: false,
-      },
-      maxDigits: 10,
-      history: {
-        calculations: [],
-        currentIndex: -1,
-      },
-      UI: {
-        display: true,
-        maxmize: true,
-        settings: false,
-        percentage: false,
-      },
-    };
+    this.state = initialState;
   }
 
   handleClick = buttonName => {
@@ -62,6 +42,16 @@ class App extends React.Component {
     return historyAssistant(this.state.history).hasPrevious();
   };
 
+  componentDidUpdate(prevProps, prevState) {
+    let reset = setReset(prevState);
+    if (prevState.reset !== reset) {
+      this.setState({
+        prevState,
+        reset: reset,
+      });
+    }
+  }
+
   render() {
     return (
       <div
@@ -88,6 +78,7 @@ class App extends React.Component {
             operation={this.state.operation}
             hasNext={this.hasNext}
             hasPrevious={this.hasPrevious}
+            reset={this.state.reset}
           />
         </div>
         <div
