@@ -31,3 +31,6 @@ Usage
 ---
 
 `npm start`
+
+# Live page 
+http://panpan.dk/calculator/
