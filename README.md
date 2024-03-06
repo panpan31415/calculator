@@ -1,11 +1,10 @@
-Frontend Web Developer Application
----
+## Frontend Web Developer Application
+
 Thank you for applying for the position of Frontend Web developer at Motosumo.
 
-We've forked this simple React.js showcase project, and we would like you to add some features to demonstrate your skills in UX, UI and React. 
+We've forked this simple React.js showcase project, and we would like you to add some features to demonstrate your skills in UX, UI and React.
 
-Here's what you need to do:
----
+## Here's what you need to do:
 
 - Fork this repository, and make it public so we can see the changes you make to it.
 - Complete one or two of the following tasks (pick some that you feel will best showcase your strengths):
@@ -19,18 +18,14 @@ Here's what you need to do:
 
 Good luck!
 
-
-Install
----
+## Install
 
 `npm install`
 
-
-
-Usage
----
+## Usage
 
 `npm start`
 
-# Live page 
-http://panpan.dk/calculator/
+# Live page
+
+https://panpan31415.github.io/calculator/
